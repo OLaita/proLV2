@@ -55,7 +55,7 @@ class User extends Authenticatable
     {
         return $this
             ->belongsToMany('App\Models\Videos')
-            ->withTimestamps();
+            ->withPivot('video_id');
     }
 
     public function authorizeRoles($roles)

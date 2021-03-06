@@ -4,8 +4,21 @@
     <div class="col-lg-12">
         <div class="col-sm-4">
         <h1 class="my-4">Perfil</h1>
-        <p>Usuario: {{ $user->name }}</p>
-        <p>Email: {{ $user->email }}</p>
+        <form action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('POST')
+            Name
+            <input type="text" name="name" value="{{$user->name}}" class="form form-control">
+
+            Email
+            <br/>
+            <input type="email" name="email" value="{{$user->email}}" class="form form-control">
+
+            <br/>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <br/>
+            <br/>
+        </form>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#miModal">
             Cambiar contraseña
         </button>
@@ -20,7 +33,7 @@
                     @endif
                     <div class="card-body">
                         <h4 class="card-title">{{ $video->title }}</h4>
-                        <a href="{{ route('src.show', $video->user) }}" class="card-text">{{ $video->user }}</a><br>
+                        <a href="{{ route('src.show', $video->name) }}" class="card-text">{{ $video->name }}</a><br>
                         <a href="{{ route('vid.show', $video->id) }}" class="btn btn-primary">Ver Video</a>
 
                         <a class="btn btn-primary" href="{{ route('vidE.edit', $video->id) }}">Edit</a>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Video;
 use App\Models\User;
 use App\Models\Comments;
+use App\Models\VideoView;
 
 class AdminController extends Controller
 {
@@ -22,7 +23,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $videos = Video::all();
+        $videos = VideoView::all();
         return view('videos.index',compact('videos'));
     }
 

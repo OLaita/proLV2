@@ -9,7 +9,7 @@
                     Your browser does not support HTML video.
                 </video><br>
                 <h1 class="my-4">{{ $videos->title }}</h1>
-                <span>{{ $videos->desc }}</span>
+                <span>{{ $videos->desc }}</span><br><a href="{{ route('src.show', $videos->name) }}" class="card-text">{{ $videos->name }}</a>
                 @auth
                 <div class="d-flex flex-row">
                         @if (Auth::user()->hasRole('admin'))
@@ -19,7 +19,7 @@
                                 @method("DELETE")
                                 <td><button class="btn btn-danger">Borrar</button></td>
                             </form>
-                        @elseif(Auth::user()->name == $videos->user)
+                        @elseif(Auth::user()->name == $videos->name)
                             <a class="btn btn-primary" href="{{ route('vidE.edit', $videos->id) }}">Edit</a>
                             <form action="{{ route('vidE.destroy', $videos->id) }}" method="POST">
                                 @csrf
@@ -49,7 +49,7 @@
                 <div class="flex-column d-flex align-items-center">
                     @foreach ($comments->get() as $comment)
                         <div style="margin-bottom:10px; padding: 10px;" class="w-75 bg-dark text-white text-left">
-                            <div class="d-flex justify-content-between"><span>{{ $comment->user }}</span>
+                            <div class="d-flex justify-content-between"><span>{{ $comment->name }}</span>
                                 <span class="text-muted">Hace:
                                     @if ($comment->created_at->diff(now()->toDateTimeString())->i == 0)
                                         Ahora
@@ -73,13 +73,13 @@
         </div>
         <div class="col-sm-4 sidenav">
             @foreach ($allVid as $video)
-                <div class="card" style="width:200px; height: 200px;">
+                <div class="card" style="width:200px; height: 250px;">
                     @if ($video->mini != null)<img class="card-img-top"
                             src="{{ asset('storage/' . $video->mini) }}" alt="Card image" style="width:100%; height: 100px;">
                     @endif
                     <div class="card-body">
                         <h4 class="card-title">{{ $video->title }}</h4>
-                        <a href="{{ route('src.show', $video->user) }}" class="card-text">{{ $video->user }}</a>
+                        <a href="{{ route('src.show', $video->name) }}" class="card-text">{{ $video->name }}</a>
                         <a href="{{ route('vid.show', $video->id) }}" class="btn btn-primary">Ver Video</a>
                     </div>
                 </div>

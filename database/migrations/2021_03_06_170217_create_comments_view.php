@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateVideosUserTable extends Migration
+class CreateCommentsView extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,9 @@ class CreateVideosUserTable extends Migration
     public function up()
     {
         DB::statement("
-            CREATE VIEW video_views
+            CREATE VIEW comment_views
             AS
-            select videos.id, videos.cont, videos.desc, videos.title, videos.mini, users.name from videos inner join users on videos.user = users.id");
+            select comments.id, users.name, comments.comment, comments.idVideo, comments.created_at from comments inner join users on comments.user = users.id");
     }
 
     /**
@@ -27,6 +27,6 @@ class CreateVideosUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('video_views');
+        Schema::dropIfExists('comments_view');
     }
 }

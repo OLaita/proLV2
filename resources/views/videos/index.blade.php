@@ -21,7 +21,7 @@
                         <source src="{{asset('storage/'.$video->cont)}}" type="video/mp4">
                       Your browser does not support the video tag.
                       </video></td>
-                    <td>{{$video->user}}</td>
+                    <td>{{$video->name}}</td>
                     <td><a class="btn btn-primary" href="{{route('vidA.edit',$video->id)}}">Edit</a></td>
                     <form action="{{route('vidA.destroy',$video->id)}}" method="POST">
                         @csrf

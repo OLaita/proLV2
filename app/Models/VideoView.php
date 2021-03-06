@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class VideoView extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'title',
         'cont',
@@ -16,11 +15,4 @@ class Video extends Model
         'mini',
         'user'
     ];
-
-    public function users()
-    {
-        return $this
-            ->belongsToMany('App\Models\User')
-            ->withPivot('user_id');
-    }
 }

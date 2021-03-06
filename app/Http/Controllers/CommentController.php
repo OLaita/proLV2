@@ -83,7 +83,7 @@ class CommentController extends Controller
         $request->validate([
             'comment'=>'required',
         ]);
-        $user = Auth::user()->name;
+        $user = Auth::user()->id;
 
         Comments::create(['comment'=>$request->comment,
                         'user'=>$user,

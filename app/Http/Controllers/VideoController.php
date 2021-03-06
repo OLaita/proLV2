@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Routing\Route;
 use App\Models\Comments;
+use App\Models\VideoView;
+use App\Models\CommentView;
 
 class VideoController extends Controller
 {
@@ -82,15 +84,15 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        $videos=Video::find($id);
-        $allVid=Video::whereNotIn('id', [$id])->get();
-        $comments = Comments::where('idVideo',$id)->orderBy('created_at','DESC');
+        $videos=VideoView::find($id);
+        $allVid=VideoView::whereNotIn('id', [$id])->get();
+        $comments = CommentView::where('idVideo',$id)->orderBy('created_at','DESC');
         return view('videos.show',compact('videos','allVid','comments'));
     }
 
     public function allVideos()
     {
-        $videos=Video::all();
+        $videos=VideoView::all();
         return view('videos.all',compact('videos'));
     }
 

@@ -19,8 +19,8 @@ class CreateVideoTable extends Migration
 		    $table->string('cont', 255);
 		    $table->string('desc', 100);
             $table->string('mini', 255);
-		    $table->string('user');
-            $table->foreign('user')->references('name')->on('users');
+		    $table->unsignedBigInteger('user');
+            $table->foreign('user')->references('id')->on('users');
 
 		    $table->timestamps();
         });

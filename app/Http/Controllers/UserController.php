@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Video;
+use App\Models\VideoView;
 
 class UserController extends Controller
 {
@@ -43,22 +44,10 @@ class UserController extends Controller
             'email' => 'min:10|max:32',
         ]);
 
-        $vid = Video::where('user',Auth::user()->name)->get();
-        foreach($vid as $video){
-            $video->user = $request->name;
-            $video->save();
-        }
-
-        $com = Comments::where('user',Auth::user()->name)->get();
-        foreach($com as $comments){
-            $comments->user = $request->name;
-            $comments->save();
-        }
-
         $user = Auth::user();
 
         $user->name = $request->name;
-        $user->name = $request->email;
+        $user->email = $request->email;
         $user->save();
 
         return redirect()->back();
@@ -73,7 +62,7 @@ class UserController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $videos = Video::where('user',$user->name)->get();
+        $videos = VideoView::where('name',$user->name)->get();
         return view('user.profile',compact('user','videos'));
     }
 

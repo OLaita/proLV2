@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Video;
+use App\Models\VideoView;
 
 class SearchController extends Controller
 {
@@ -39,7 +40,7 @@ class SearchController extends Controller
             'search'=>'required',
         ]);
         $id = $request->search;
-        $videos = Video::where('title', 'like', '%'.$id.'%')->get();
+        $videos = VideoView::where('title', 'like', '%'.$id.'%')->get();
 
         //dd($videos);
 
@@ -54,7 +55,7 @@ class SearchController extends Controller
      */
     public function show($id)
     {
-        $videos = Video::where('user',$id)->get();
+        $videos = VideoView::where('name',$id)->get();
         //dd($videos);
         return view('videos.search',compact('videos','id'));
     }

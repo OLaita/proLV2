@@ -61,7 +61,7 @@ class EditorController extends Controller
 
         $pathV=$request->file('video')->store('videos','public');
         $pathI=$request->file('image')->store('mini','public');
-        $user = Auth::user()->name;
+        $user = Auth::user()->id;
         Video::create(['title'=>$request->title,
                         'cont'=>$pathV,
                         'desc'=>$request->desc,
