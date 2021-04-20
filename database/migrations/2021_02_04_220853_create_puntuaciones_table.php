@@ -14,10 +14,11 @@ class CreatePuntuacionesTable extends Migration
     public function up()
     {
         Schema::create('puntuaciones', function (Blueprint $table) {
-            $table->increments('id')->unique();
+            $table->id();
 		    $table->unsignedBigInteger('video_id');
 		    $table->unsignedBigInteger('user');
-		    $table->integer('p_num');
+		    $table->boolean('voto');
+            $table->timestamps();
             $table->foreign('user')->references('id')->on('users');
             $table->foreign('video_id')->references('id')->on('videos');
 

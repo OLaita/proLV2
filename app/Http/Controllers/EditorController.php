@@ -66,8 +66,9 @@ class EditorController extends Controller
                         'cont'=>$pathV,
                         'desc'=>$request->desc,
                         'mini'=>$pathI,
-                        'visitas'=>0,
-                        'user'=>$user
+                        'user'=>$user,
+                        'puntos'=>0,
+                        'visitas'=>0
             ]);
         $videos=Video::all();
         //return view('videos.all',compact('videos'));

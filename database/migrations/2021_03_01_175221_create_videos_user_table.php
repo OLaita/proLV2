@@ -17,7 +17,7 @@ class CreateVideosUserTable extends Migration
         DB::statement("
             CREATE VIEW video_views
             AS
-            select videos.id, videos.cont, videos.desc, videos.title, videos.mini, users.name from videos inner join users on videos.user = users.id");
+            select videos.id, videos.cont, videos.desc, videos.title, videos.mini, videos.puntos, videos.visitas, users.name from videos inner join users on videos.user = users.id");
     }
 
     /**

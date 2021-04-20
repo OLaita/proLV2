@@ -26,9 +26,21 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'min:3|max:32',
+            'email' => 'min:10|max:32',
+            'id',
+        ]);
+
+        $user = User::find($request->id);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -42,9 +54,10 @@ class UserController extends Controller
         $request->validate([
             'name' => 'min:3|max:32',
             'email' => 'min:10|max:32',
+            'id',
         ]);
 
-        $user = Auth::user();
+        $user = User::find($request->id);
 
         $user->name = $request->name;
         $user->email = $request->email;
@@ -72,9 +85,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
+    public function edit($id)
     {
-
+        $user=User::find($id);
+        return view('user.edit',compact('user'));
     }
 
     /**
@@ -88,9 +102,10 @@ class UserController extends Controller
     {
         $request->validate([
             'password' => 'required|confirmed|min:3|max:32',
+            'id',
         ]);
 
-        $user = Auth::user();
+        $user = User::find($request->id);
         $password = bcrypt($request->password);
 
         $user->password = $password;
@@ -107,6 +122,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $com = Comments::where('user',$id);
+        $com->delete();
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->back();
     }
 }

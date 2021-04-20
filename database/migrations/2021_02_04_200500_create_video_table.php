@@ -19,6 +19,8 @@ class CreateVideoTable extends Migration
 		    $table->string('cont', 255);
 		    $table->string('desc', 100);
             $table->string('mini', 255);
+            $table->integer('puntos');
+            $table->integer('visitas');
 		    $table->unsignedBigInteger('user');
             $table->foreign('user')->references('id')->on('users');
 

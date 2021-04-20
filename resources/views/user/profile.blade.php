@@ -9,7 +9,7 @@
             @method('POST')
             Name
             <input type="text" name="name" value="{{$user->name}}" class="form form-control">
-
+            <input type="hidden" name="id" value="{{$user->id}}" class="form form-control">
             Email
             <br/>
             <input type="email" name="email" value="{{$user->email}}" class="form form-control">
@@ -59,6 +59,7 @@
                     <form class="modal-body" action="{{ route('user.update', Auth::user()) }}" method="POST">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="id" value="{{$user->id}}" class="form form-control">
                         Nueva Contraseña
                         <br />
                         <input type="password" name="password" class="form form-control">

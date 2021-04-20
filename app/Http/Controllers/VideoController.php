@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Route;
 use App\Models\Comments;
 use App\Models\VideoView;
 use App\Models\CommentView;
+use App\Models\Puntuaciones;
 
 class VideoController extends Controller
 {
@@ -84,10 +85,40 @@ class VideoController extends Controller
      */
     public function show($id)
     {
+
+        $vid=Video::find($id);
+        $visi=Video::find($id)->visitas;
+        $vid->update(['visitas'=>$visi+1
+        ]);
+
+        if(Auth::user()){
+
+            $user = Auth::user()->id;
+            $punt = Puntuaciones::where("video_id",$id)->where("user",$user)->get();
+
+            if(count($punt) == 0){
+
+                $p = "fa";
+                $videos=VideoView::find($id);
+                $allVid=VideoView::whereNotIn('id', [$id])->get();
+                $comments = CommentView::where('idVideo',$id)->orderBy('created_at','DESC');
+                return view('videos.show',compact('videos','allVid','comments','p'));
+            }
+
+            if($punt[0]->voto == 1){
+                $p = "tr";
+            }else{
+                $p = "fa";
+            }
+
+        }else{
+            $p = "fa";
+        }
+
         $videos=VideoView::find($id);
         $allVid=VideoView::whereNotIn('id', [$id])->get();
         $comments = CommentView::where('idVideo',$id)->orderBy('created_at','DESC');
-        return view('videos.show',compact('videos','allVid','comments'));
+        return view('videos.show',compact('videos','allVid','comments','p'));
     }
 
     public function allVideos()
@@ -126,6 +157,37 @@ class VideoController extends Controller
 
         return view('videos.index',compact('videos'));
 
+    }
+
+    public function vote($id)
+    {
+
+        if(Auth::user() == null){
+            return redirect()->route('login');
+        }
+
+        $user = Auth::user()->id;
+
+        $punt = Puntuaciones::where("video_id",$id)->where("user",$user)->get();
+
+        if(count($punt) <= 0){
+            Puntuaciones::create(['video_id'=>$id,'user'=>$user,'voto'=>true]);
+        }elseif($punt[0]->voto == 1){
+            $videos=Video::find($id);
+            $pun=Video::find($id)->puntos;
+            $vis=Video::find($id)->visitas;
+            $videos->update(['puntos'=>$pun-1,'visitas'=>$vis-1]);
+            $punt[0]->update(['voto'=>false]);
+            return redirect()->route("vid.show",$id);
+        }else{
+            $punt[0]->update(['voto'=>true]);
+        }
+
+        $videos=Video::find($id);
+        $pun=Video::find($id)->puntos;
+        $vis=Video::find($id)->visitas;
+        $videos->update(['puntos'=>$pun+1,'visitas'=>$vis-1]);
+        return redirect()->route("vid.show",$id);
     }
 
     /**

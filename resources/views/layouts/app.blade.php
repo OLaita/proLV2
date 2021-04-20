@@ -83,7 +83,7 @@
                                                 {{ __('Todos') }}
                                             </a>
                                             <a class="dropdown-item" href="{{ route('edit') }}">
-                                                {{ __('Editar Videos') }}
+                                                {{ __('Administrar') }}
                                             </a>
                                         </div>
                                     </li>

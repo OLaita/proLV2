@@ -14,7 +14,9 @@ class Video extends Model
         'cont',
         'desc',
         'mini',
-        'user'
+        'user',
+        'puntos',
+        'visitas'
     ];
 
     public function users()

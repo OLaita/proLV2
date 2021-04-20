@@ -24,7 +24,8 @@ class AdminController extends Controller
     public function index()
     {
         $videos = VideoView::all();
-        return view('videos.index',compact('videos'));
+        $users = User::all();
+        return view('videos.index',compact('videos','users'));
     }
 
     /**
@@ -56,7 +57,8 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-
+        $user=User::find($id);
+        return view('user.edit',compact('user'));
     }
 
     /**

@@ -3,13 +3,24 @@
 @section('content')
     <div class="row content">
         <div style="left:50px" class="col-sm-8">
-            <div>
-                <video width="80%" controls>
+            <div class="w-75">
+                <video width="100%" controls>
                     <source src="{{ asset('storage/' . $videos->cont) }}" type="video/mp4">
                     Your browser does not support HTML video.
                 </video><br>
                 <h1 class="my-4">{{ $videos->title }}</h1>
-                <span>{{ $videos->desc }}</span><br><a href="{{ route('src.show', $videos->name) }}" class="card-text">{{ $videos->name }}</a>
+                <span>{{ $videos->desc }}</span><br>
+                <div class="d-flex justify-content-between">
+                <a href="{{ route('src.show', $videos->name) }}" class="card-text">{{ $videos->name }}</a>
+                <span>Visitas: {{ $videos->visitas }}
+                    @if($p == "tr")
+                    <a href="{{ route('src.edit', $videos->id) }}" class="btn btn-primary btn-success">
+                    <span class="glyphicon glyphicon-thumbs-up"></span> {{ $videos->puntos }}</a></span>
+                    @else
+                    <a href="{{ route('src.edit', $videos->id) }}" class="btn btn-primary btn-info">
+                        <span class="glyphicon glyphicon-thumbs-up"></span> {{ $videos->puntos }}</a></span>
+                    @endif
+                </div>
                 @auth
                 <div class="d-flex flex-row">
                         @if (Auth::user()->hasRole('admin'))
@@ -50,6 +61,21 @@
                     @foreach ($comments->get() as $comment)
                         <div style="margin-bottom:10px; padding: 10px;" class="w-75 bg-dark text-white text-left">
                             <div class="d-flex justify-content-between"><span>{{ $comment->name }}</span>
+                                @auth
+                                @if (Auth::user()->hasRole('admin'))
+                                <form action="{{ route('com.destroy', $comment->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <td><button class="btn btn-danger">Borrar</button></td>
+                                </form>
+                                @elseif(Auth::user()->name == $comment->name)
+                                <form action="{{ route('com.destroy', $comment->id) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <td><button class="btn btn-danger">Borrar</button></td>
+                                </form>
+                                @endif
+                            @endauth
                                 <span class="text-muted">Hace:
                                     @if ($comment->created_at->diff(now()->toDateTimeString())->i == 0)
                                         Ahora

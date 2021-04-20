@@ -25,6 +25,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+
 Route::resources([
     'vid'=>VideoController::class,
     'src'=>SearchController::class,
@@ -36,6 +38,7 @@ Route::resources([
 //Route::get('/all', [App\Http\Controllers\VideoController::class, 'allVideos'])->name('all');
 Route::get('/', [App\Http\Controllers\VideoController::class, 'allVideos'])->name('all');
 Route::get('/show', [App\Http\Controllers\VideoController::class, 'show'])->name('show');
+
 
 Route::prefix('user')->group(function(){
     Route::get('/profile', [UserController::class, 'show'])->name('profile');

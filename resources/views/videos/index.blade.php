@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-lg-12">
 
-        <h1 class="my-4">Properties</h1>
+        <h1 class="my-4">Videos</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -27,6 +27,33 @@
                         @csrf
                         @method("DELETE")
                     <td><button class="btn btn-danger">Borrar</button></td>
+                    </form>
+                </tr>
+            @endforeach
+
+            </thead>
+        </table>
+    </div>
+
+    <div class="col-lg-12">
+
+        <h1 class="my-4">Usuarios</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+            @foreach($users as $user)
+                <tr>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->email}}</td>
+                    <td><a class="btn btn-primary" href="{{route('vidA.show',$user->id)}}">Edit</a></td>
+                    <form action="{{route('vidA.destroy',$user->id)}}" method="POST">
+                        @csrf
+                        @method("DELETE")
+                    <td><button class="btn btn-danger">Borrar</button></td>
+                    </form>
                     </form>
                 </tr>
             @endforeach
